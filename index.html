@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Portrait Player</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+    video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <video id="player" loop playsinline webkit-playsinline muted preload="auto">
+    <source src="soul.mp4" type="video/mp4">
+  </video>
+  <script>
+    const v = document.getElementById("player");
+    function tryPlay() {
+      v.play().catch(() => {
+        document.addEventListener("click",      () => v.play(), { once: true });
+        document.addEventListener("touchstart", () => v.play(), { once: true });
+      });
+    }
+    v.addEventListener("loadeddata",     tryPlay);
+    v.addEventListener("canplaythrough", tryPlay);
+    setTimeout(tryPlay, 2000);
+  </script>
+</body>
+</html>
